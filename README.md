@@ -1,3 +1,5 @@
+# This repo is just a mirror
+
 # window_utils
 
 A Flutter plugin for Desktop that controls the window instance.
@@ -53,7 +55,7 @@ WidgetsBinding.instance.addPostFrameCallback(
 );
 ```
 
-![no_title](https://github.com/rive-app/window_utils/blob/master/doc/macos.png?raw=true)
+![no_title](https://github.com/adrianjagielak/window_utils/blob/master/doc/macos.png?raw=true)
 
 #### Show the default title bar
 
