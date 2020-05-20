@@ -1,10 +1,10 @@
 import Cocoa
 import FlutterMacOS
 
-public class WindowUtilsPlugin: NSObject, FlutterPlugin {
+public class WindowUtils: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "window_utils", binaryMessenger: registrar.messenger)
-        let instance = WindowUtilsPlugin()
+        let instance = WindowUtils()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
@@ -20,6 +20,13 @@ public class WindowUtilsPlugin: NSObject, FlutterPlugin {
         case "getWindowSize":
             let window = NSApplication.shared.keyWindow
             let size = window?.frame.size
+            var _output: [String: Any?] = [:]
+            _output["width"] = Double(size?.width ?? 0)
+            _output["height"] = Double(size?.height ?? 0)
+            result(_output)
+        case "getScreenSize":
+            let window = NSApplication.shared.keyWindow
+            let size = window?.screen?.frame.size
             var _output: [String: Any?] = [:]
             _output["width"] = Double(size?.width ?? 0)
             _output["height"] = Double(size?.height ?? 0)
@@ -41,19 +48,41 @@ public class WindowUtilsPlugin: NSObject, FlutterPlugin {
             let window = NSApplication.shared.keyWindow
             window?.styleMask.update(with: .titled)
             result(true)
+        case "windowTitleDoubleTap":
+            let window = NSApplication.shared.keyWindow
+            let isZoomed = window?.isZoomed ?? false
+            window?.setIsZoomed(!isZoomed)
+            result(true)
+        case "closeWindow":
+            let window = NSApplication.shared.keyWindow
+            window?.close()
+            result(true)
+        case "centerWindow":
+            let window = NSApplication.shared.keyWindow
+            window?.center()
+            result(true)
+        case "setPosition":
+            let args = call.arguments as? [String: Any]
+            let x: Double = (args?["x"] as? Double)!
+            let y: Double = (args?["y"] as? Double)!
+            let point: NSPoint = NSPoint(x: x, y: y)
+            let window = NSApplication.shared.keyWindow
+            window?.setFrameOrigin(point)
+            result(true)
+        case "setSize":
+            let args = call.arguments as? [String: Any]
+            let width: Double = (args?["width"] as? Double)!
+            let height: Double = (args?["height"] as? Double)!
+            let size: NSSize = NSSize(width: width, height: height)
+            let window = NSApplication.shared.keyWindow
+            window?.setContentSize(size)
+            result(true)
         case "startDrag":
             let window = NSApplication.shared.keyWindow
             if let event: NSEvent = window?.currentEvent
             {
                 window?.performDrag(with: event)
             }
-            result(true)
-        case "setMovable":
-            let args = call.arguments as? [String: Any]
-            let canMove: Bool? = args?["canMove"] as? Bool
-            let window = NSApplication.shared.keyWindow
-            window?.isMovableByWindowBackground = canMove ?? true
-            window?.isMovable = canMove ?? true
             result(true)
         case "childWindowsCount":
             let window = NSApplication.shared.keyWindow

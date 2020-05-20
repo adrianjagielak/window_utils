@@ -1,6 +1,6 @@
 name: window_utils
 description: A flutter plugin for managing window decoration.
-version: 1.0.0
+version: 1.0.1
 authors:
   - Rhodes Davis Jr. <rody.davis.jr@gmail.com>
   - Rive <info@rive.app>
@@ -9,22 +9,16 @@ environment:
   sdk: ">=2.0.0-dev.28.0 <3.0.0"
   flutter: ">=1.12.8 <2.0.0"
 
+flutter:
+  plugin:
+    platforms:
+      linux:
+        pluginClass: WindowUtils
+      macos:
+        pluginClass: WindowUtils
+      windows:
+        pluginClass: WindowUtils
+
 dependencies:
   flutter:
     sdk: flutter
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
-flutter:  
-  plugin:
-    platforms:
-      android:
-        package: app.rive.window_utils
-        pluginClass: WindowUtilsPlugin
-      ios:
-        pluginClass: WindowUtilsPlugin
-      macos:
-        pluginClass: WindowUtilsPlugin
-

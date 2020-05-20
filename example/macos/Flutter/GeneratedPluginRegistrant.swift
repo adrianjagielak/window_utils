@@ -8,5 +8,5 @@ import Foundation
 import window_utils
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  WindowUtilsPlugin.register(with: registry.registrar(forPlugin: "WindowUtilsPlugin"))
+  WindowUtils.register(with: registry.registrar(forPlugin: "WindowUtils"))
 }
