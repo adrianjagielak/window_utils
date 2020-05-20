@@ -1,14 +1,3 @@
-# window_utils
-
-A new flutter plugin project.
-
-- Remove MacOS title bar
-
-![](https://github.com/rive-app/window_utils/blob/master/doc/macos.png?raw=true)
-
-## Example
-
-```dart
 import 'package:flutter/material.dart';
 
 import 'package:window_utils/window_utils.dart';
@@ -92,5 +81,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-```

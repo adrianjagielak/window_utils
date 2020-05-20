@@ -1,10 +1,6 @@
-# window_utils
+# window_utils_example
 
-A new flutter plugin project.
-
-- Remove MacOS title bar
-
-![](https://github.com/rive-app/window_utils/blob/master/doc/macos.png?raw=true)
+Demonstrates how to use the window_utils plugin.
 
 ## Example
 
