@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -95,6 +96,46 @@ class WindowUtils {
     final _data = await _channel.invokeMethod<Map>('getWindowOffset');
     return Offset(_data['offsetX'] as double, _data['offsetY'] as double);
   }
+
+  static Future<bool> hideCursor() {
+    return _channel.invokeMethod<bool>('hideCursor');
+  }
+
+  static Future<bool> showCursor() {
+    return _channel.invokeMethod<bool>('showCursor');
+  }
+
+  static Future<bool> setCursor(CursorType cursor) {
+    return _channel.invokeMethod<bool>(
+      'setCursor',
+      {
+        "type": describeEnum(cursor),
+        "update": false,
+      },
+    );
+  }
+
+  static Future<bool> addCursorToStack(CursorType cursor) {
+    return _channel.invokeMethod<bool>(
+      'setCursor',
+      {
+        "type": describeEnum(cursor),
+        "update": true,
+      },
+    );
+  }
+
+  static Future<bool> removeCursorFromStack() {
+    return _channel.invokeMethod<bool>('removeCursorFromStack');
+  }
+
+  static Future<int> mouseStackCount() {
+    return _channel.invokeMethod<int>('mouseStackCount');
+  }
+
+  static Future<bool> resetCursor() {
+    return _channel.invokeMethod<bool>('resetCursor');
+  }
 }
 
 enum DragPosition {
@@ -106,4 +147,25 @@ enum DragPosition {
   bottomLeft,
   topRight,
   bottomRight
+}
+
+enum CursorType {
+  arrow,
+  beamVertical,
+  crossHair,
+  closedHand,
+  openHand,
+  pointingHand,
+  resizeLeft,
+  resizeRight,
+  resizeDown,
+  resizeUp,
+  resizeLeftRight,
+  resizeUpDown,
+  beamHorizontial,
+  disappearingItem,
+  notAllowed,
+  dragLink,
+  dragCopy,
+  contextMenu,
 }

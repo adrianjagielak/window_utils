@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -97,9 +98,6 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
           ),
-          floatingActionButton: InkWell(
-            child: Icon(Icons.drag_handle),
-          ),
           body: ListView(
             children: <Widget>[
               ListTile(
@@ -155,6 +153,36 @@ class _MyAppState extends State<MyApp> {
                   icon: Icon(Icons.close),
                   onPressed: () {
                     WindowUtils.closeWindow();
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text("Change Cursor"),
+                // trailing: IconButton(
+                //   icon: Icon(Icons.add),
+                //   onPressed: () {
+                //     final _size = CursorType.values.length;
+                //     final _randomNum = Random.secure().nextInt(_size);
+                //     final _newCursor = CursorType.values[_randomNum];
+                //     WindowUtils.addCursorToStack(_newCursor);
+                //   },
+                // ),
+                subtitle: DropdownButton<CursorType>(
+                  value: CursorType.arrow,
+                  items: CursorType.values
+                      .map((t) => DropdownMenuItem(
+                            value: t,
+                            child: Text(describeEnum(t)),
+                          ))
+                      .toList(),
+                  onChanged: (val) {
+                    WindowUtils.setCursor(val);
+                  },
+                ),
+                trailing: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    WindowUtils.resetCursor();
                   },
                 ),
               ),

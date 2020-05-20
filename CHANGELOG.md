@@ -1,5 +1,15 @@
 # Changes
 
+## 1.0.2
+
+- Added: `hideCursor` (MacOS)
+- Added: `showCursor` (MacOS)
+- Added: `setCursor` (MacOS)
+- Added: `addCursorToStack` (MacOS)
+- Added: `removeCursorFromStack` (MacOS)
+- Added: `mouseStackCount` (MacOS)
+- Added: `resetCursor` (MacOS)
+
 ## 1.0.1
 
 - Removed: `setCanMove`

@@ -202,6 +202,114 @@ This will return a `Offset` offset of the application window that is running.
 WindowUtils.getWindowOffset();
 ```
 
+#### Set Mouse Cursor
+
+> MACOS ONLY
+
+Update the system cursor.
+
+You need to provide `CursorType` type to set the cursor too. (You can also add the cursor to the stack)
+
+Avaliable cursors:
+
+```dart
+enum CursorType {
+  arrow,
+  beamVertical,
+  crossHair,
+  closedHand,
+  openHand,
+  pointingHand,
+  resizeLeft,
+  resizeRight,
+  resizeDown,
+  resizeUp,
+  resizeLeftRight,
+  resizeUpDown,
+  beamHorizontial,
+  disappearingItem,
+  notAllowed,
+  dragLink,
+  dragCopy,
+  contextMenu,
+}
+
+```
+
+```dart
+WindowUtils.setCursor(CursorType cursor);
+```
+
+#### Add Mouse Cursor To Stack
+
+> MACOS ONLY
+
+Add a new cursor to the mouse cursor stack.
+
+You need to provide `CursorType` type to set the cursor too. (You can also add the cursor to the stack)
+
+Avaliable cursors:
+
+```dart
+enum CursorType {
+  arrow,
+  beamVertical,
+  crossHair,
+  closedHand,
+  openHand,
+  pointingHand,
+  resizeLeft,
+  resizeRight,
+  resizeDown,
+  resizeUp,
+  resizeLeftRight,
+  resizeUpDown,
+  beamHorizontial,
+  disappearingItem,
+  notAllowed,
+  dragLink,
+  dragCopy,
+  contextMenu,
+}
+
+```
+
+```dart
+WindowUtils.addCursorToStack(CursorType cursor);
+```
+
+#### Remove Cursor From Stack
+
+This will remove the top cursor from the stack.
+
+```dart
+WindowUtils.removeCursorFromStack();
+```
+
+#### Hide Cursor(s)
+
+This will hide the all the cursors in the stack.
+
+```dart
+WindowUtils.hideCursor();
+```
+
+#### Reset Cursor
+
+This will reset the system cursor.
+
+```dart
+WindowUtils.resetCursor();
+```
+
+#### Show Cursor(s)
+
+This will show all the cursors in the stack.
+
+```dart
+WindowUtils.showCursor();
+```
+
 ## Example
 
 ```dart
