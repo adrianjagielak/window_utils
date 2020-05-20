@@ -2,9 +2,22 @@
 
 A Flutter plugin for Desktop that controls the window instance.
 
-## Getting Started
+## Installing
 
 - Install the package from https://pub.dev in your pubspec.yaml
+
+```yaml
+dependencies:
+  window_utils: any
+```
+
+or the latest from git
+
+```yaml
+dependencies:
+  window_utils:
+    git: https://github.com/rive-app/window_utils
+```
 
 ### MacOS
 

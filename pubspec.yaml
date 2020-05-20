@@ -1,6 +1,6 @@
 name: window_utils
 description: A flutter plugin for managing window decoration.
-version: 1.0.1+1
+version: 1.0.1+2
 authors:
   - Rhodes Davis Jr. <rody.davis.jr@gmail.com>
   - Rive <info@rive.app>
