@@ -1,10 +1,193 @@
 # window_utils
 
-A new flutter plugin project.
+A Flutter plugin for Desktop that controls the window instance.
 
-- Remove MacOS title bar
+## Getting Started
 
-![](https://github.com/rive-app/window_utils/blob/master/doc/macos.png?raw=true)
+- Install the package from https://pub.dev in your pubspec.yaml
+
+### MacOS
+
+Nothing needed, already good to go!
+
+### Linux
+
+Follow this guide on how to work with desktop plugins for linux:
+
+https://github.com/google/flutter-desktop-embedding/tree/master/plugins
+
+### Windows
+
+Follow this guide on how to work with desktop plugins for windows:
+
+https://github.com/google/flutter-desktop-embedding/tree/master/plugins
+
+
+## Usage
+
+These are the various api calls and are subject to change in the future.
+
+#### Hide the desktop title bar
+
+> When you do this you will loose drag window functionality. (But there is a solution for that below). On Windows you also loose default resize and tool bar buttons (see below)
+
+```dart
+WindowUtils.hideTitleBar();
+
+// If used on app launch wrap it this way:
+WidgetsBinding.instance.addPostFrameCallback(
+   (_) => WindowUtils.hideTitleBar(),
+);
+```
+
+![no_title](https://github.com/rive-app/window_utils/blob/master/doc/macos.png?raw=true)
+
+#### Show the default title bar
+
+> This will also give you options on customizing the default toolbar in the future
+
+```dart
+WindowUtils.showTitleBar();
+```
+
+#### Close the window
+
+> Required to implement if you hide the title bar
+
+This executes a close command to the window. It can still be restored by the OS if enabled.
+
+```dart
+WindowUtils.showTitleBar();
+```
+
+#### Minimize the window
+
+> WINDOWS ONLY
+
+> Required to implement if you hide the title bar
+
+This will minimize the window if you hide the title bar and/or have a custom minimize button.
+
+```dart
+WindowUtils.minWindow();
+```
+
+#### Maximize the window
+
+> WINDOWS ONLY
+
+> Required to implement if you hide the title bar
+
+This will maximize the window if you hide the title bar and/or have a custom maximize button.
+
+```dart
+WindowUtils.maxWindow();
+```
+
+#### Center the window
+
+This will center the window.
+
+```dart
+WindowUtils.maxWindow();
+```
+
+#### Set the window position
+
+This will position the window in relation to the display it is rendered in.
+
+You need to provide `Offset` that is the top left corner of the screen. You can get the current offset by calling `WindowUtils.getWindowOffset()`.
+
+```dart
+WindowUtils.setPosition(Offset offset);
+```
+
+#### Set the window size
+
+This will size the window in relation to the display it is rendered in.
+
+You need to provide `Size` that is the width and height of the screen. You can get the current size by calling `WindowUtils.getWindowSize()`.
+
+```dart
+WindowUtils.setSize(Size size);
+```
+
+#### Drag the window
+
+> Required to implement if you hide the title bar
+
+This will drag the window. You can call this to move the window around the screen and pass the mouse event to the native platform.
+
+```dart
+WindowUtils.startDrag();
+```
+
+#### Drag to resize the window
+
+This will drag resize the window. You can call this to resize the window on the screen and pass the mouse event to the native platform.
+
+You need to provide `DragPosition` to tell the native platform where you are dragging from. 
+
+```dart
+enum DragPosition {
+  top,
+  left,
+  right,
+  bottom,
+  topLeft,
+  bottomLeft,
+  topRight,
+  bottomRight
+}
+```
+
+Included in the package is `import 'package:window_utils/window_frame.dart';` a `WindowsFrame` that includes the calls for you with a transparent border to handle the events. See the example for more details.
+
+```dart
+startResize(DragPosition position);
+```
+
+#### Double tap title bar command
+
+> Required to implement if you hide the title bar
+
+This will call the native platform command for when you double tap on a title bar.
+
+```dart
+WindowUtils.windowTitleDoubleTap();
+```
+
+#### Child window count
+
+This will return a `int` count of all the children windows currently open.
+
+```dart
+WindowUtils.childWindowsCount();
+```
+
+#### Get display screen size
+
+This will return a `Size` size of the display window that the application is running in.
+
+```dart
+WindowUtils.getScreenSize();
+```
+
+#### Get application screen size
+
+This will return a `Size` size of the application window that is running.
+
+```dart
+WindowUtils.getWindowSize();
+```
+
+#### Get application position
+
+This will return a `Offset` offset of the application window that is running.
+
+```dart
+WindowUtils.getWindowOffset();
+```
 
 ## Example
 
@@ -15,6 +198,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:window_utils/window_utils.dart';
+import 'package:window_utils/window_frame.dart';
 
 void main() {
   if (!kIsWeb && debugDefaultTargetPlatformOverride == null) {
@@ -175,112 +359,5 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-class WindowsFrame extends StatelessWidget {
-  final Widget child;
-  final bool active;
-  final BoxBorder border;
-
-  const WindowsFrame({
-    Key key,
-    @required this.child,
-    @required this.active,
-    this.border,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    if (!active) return child;
-    final width = 4.0;
-    final height = 4.0;
-    return Container(
-      child: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          border != null
-              ? Container(
-                  decoration: BoxDecoration(border: border),
-                  child: child,
-                )
-              : child,
-          Positioned(
-            top: 0,
-            left: width,
-            right: width,
-            height: height,
-            child: GestureDetector(
-              onTapDown: (_) => WindowUtils.startResize(DragPosition.top),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: width,
-            right: width,
-            height: height,
-            child: GestureDetector(
-              onTapDown: (_) => WindowUtils.startResize(DragPosition.bottom),
-            ),
-          ),
-          Positioned(
-            bottom: height,
-            top: height,
-            right: 0,
-            width: width,
-            child: GestureDetector(
-              onTapDown: (_) => WindowUtils.startResize(DragPosition.right),
-            ),
-          ),
-          Positioned(
-            bottom: height,
-            top: height,
-            left: 0,
-            width: width,
-            child: GestureDetector(
-              onTapDown: (_) => WindowUtils.startResize(DragPosition.left),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            height: height,
-            width: width,
-            child: GestureDetector(
-              onTapDown: (_) => WindowUtils.startResize(DragPosition.topLeft),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            right: 0,
-            height: height,
-            width: width,
-            child: GestureDetector(
-              onTapDown: (_) => WindowUtils.startResize(DragPosition.topRight),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            height: height,
-            width: width,
-            child: GestureDetector(
-              onTapDown: (_) =>
-                  WindowUtils.startResize(DragPosition.bottomLeft),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            height: height,
-            width: width,
-            child: GestureDetector(
-              onTapDown: (_) =>
-                  WindowUtils.startResize(DragPosition.bottomRight),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 
 ```
