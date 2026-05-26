@@ -4,18 +4,19 @@
 Pod::Spec.new do |s|
   s.name             = 'window_utils'
   s.version          = '0.0.3'
-  s.summary          = 'A new flutter plugin project.'
+  s.summary          = 'A flutter plugin for managing window decoration.'
   s.description      = <<-DESC
-A new flutter plugin project.
+A flutter plugin for managing window decoration.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/rive-app/window-utils'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'Rive' => 'info@rive.app' }
   s.source           = { :path => '.' }
-  s.source_files     = 'Classes/**/*'
+  s.source_files     = 'window_utils/Sources/window_utils/**/*.swift'
   s.dependency 'FlutterMacOS'
 
   s.platform = :osx
-  s.osx.deployment_target = '10.11'
+  s.osx.deployment_target = '10.15'
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
+  s.swift_version = '5.0'
 end
-

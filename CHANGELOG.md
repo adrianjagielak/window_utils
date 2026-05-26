@@ -1,5 +1,11 @@
 # Changes
 
+## 1.0.3
+
+- Added Swift Package Manager support for the macOS plugin.
+- Bumped minimum Flutter SDK to 3.41.0 and Dart SDK to 3.11.0 (required for SPM).
+- Bumped macOS deployment target to 10.15 to match modern FlutterMacOS requirements.
+
 ## 1.0.2
 
 - Added: `hideCursor` (MacOS)
